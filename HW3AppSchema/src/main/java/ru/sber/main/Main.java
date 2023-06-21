@@ -1,7 +1,7 @@
 package ru.sber.main;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import ru.sber.config.AppConfig;
+import ru.sber.appConfig.AppConfig;
 import ru.sber.model.MoneyTransfer;
 import ru.sber.services.MoneyTransferService;
 
