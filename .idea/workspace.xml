@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="a43db621-ebc8-4bca-9a49-459d2c6b830b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../HW4Aspects/src/main/java/ru/sber/aspects/NotEmpty.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HW4Aspects/src/main/java/ru/sber/aspects/NotEmptyAspect.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HW4Aspects/src/main/java/ru/sber/config/AppConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HW4Aspects/src/main/java/ru/sber/main/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HW4Aspects/src/main/java/ru/sber/model/Follower.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HW4Aspects/src/main/java/ru/sber/services/OnlyFellowsService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HW4Aspects/src/main/java/ru/sber/services/OnlyFellowsServiceInterface.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HW2beans/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HW2beans/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HW2beans/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HW2beans/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HW2beans/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HW2beans/src/main/java/beans/Cat.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HW2beans/src/main/java/beans/Dog.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HW2beans/src/main/java/beans/Human.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HW2beans/src/main/java/beans/Parrot.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HW2beans/src/main/java/config/ProjConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HW2beans/src/main/java/main/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HW2component/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HW2component/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HW2component/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HW2component/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HW2component/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HW2component/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HW2component/src/main/java/beans/Cat.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HW2component/src/main/java/beans/Dog.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HW2component/src/main/java/beans/Human.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HW2component/src/main/java/beans/Parrot.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HW2component/src/main/java/config/ProjConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HW2component/src/main/java/main/Main.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+        <option value="AnnotationType" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="2RTlSxW1wXtbT0pUdfldjOFYGYv" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "jdk.selected.JAVA_MODULE": "17",
+    "last_opened_file_path": "C:/Users/Sobol.DESKTOP-SBK73B5/IdeaProjects/HWSAble/HW3AppSchema",
+    "onboarding.tips.debug.path": "C:/Users/Sobol.DESKTOP-SBK73B5/IdeaProjects/HW4Aspects/src/main/java/org/example/Main.java"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="HWSAble" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="HWSAble" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a43db621-ebc8-4bca-9a49-459d2c6b830b" name="Changes" comment="" />
+      <created>1687281955449</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1687281955449</updated>
+    </task>
+    <servers />
+  </component>
+</project>
