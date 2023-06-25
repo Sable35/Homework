@@ -5,14 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a43db621-ebc8-4bca-9a49-459d2c6b830b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../HW4Aspects/src/main/java/ru/sber/aspects/NotEmpty.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../HW4Aspects/src/main/java/ru/sber/aspects/NotEmptyAspect.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../HW4Aspects/src/main/java/ru/sber/config/AppConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../HW4Aspects/src/main/java/ru/sber/main/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../HW4Aspects/src/main/java/ru/sber/model/Follower.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../HW4Aspects/src/main/java/ru/sber/services/OnlyFellowsService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../HW4Aspects/src/main/java/ru/sber/services/OnlyFellowsServiceInterface.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../HW2beans/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../HW2beans/.idea/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../HW2beans/.idea/encodings.xml" beforeDir="false" />
@@ -36,6 +28,7 @@
       <change beforePath="$PROJECT_DIR$/../HW2component/src/main/java/beans/Parrot.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../HW2component/src/main/java/config/ProjConfig.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../HW2component/src/main/java/main/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,7 +45,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="2RTlSxW1wXtbT0pUdfldjOFYGYv" />
   <component name="ProjectViewState">
@@ -64,7 +57,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "jdk.selected.JAVA_MODULE": "17",
-    "last_opened_file_path": "C:/Users/Sobol.DESKTOP-SBK73B5/IdeaProjects/HWSAble/HW3AppSchema",
+    "last_opened_file_path": "C:/Users/Sobol.DESKTOP-SBK73B5/IdeaProjects/HWSAble/spring-boot-and-mvc",
     "onboarding.tips.debug.path": "C:/Users/Sobol.DESKTOP-SBK73B5/IdeaProjects/HW4Aspects/src/main/java/org/example/Main.java"
   }
 }]]></component>
