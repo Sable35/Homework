@@ -2,6 +2,9 @@ package com.example.webapplicationexample.repository;
 
 import com.example.webapplicationexample.model.Cart;
 import com.example.webapplicationexample.model.Product;
+
+import ch.qos.logback.core.joran.conditional.IfAction;
+
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
@@ -26,25 +29,32 @@ public class LocalCartRepository implements CartRepository{
     }
     @Override
     public boolean addProductToCart(long idCart,long idProduct){
-        if (carts.contains(findById(idCart)) && productRepository.findById(idProduct).isPresent()) {
-            carts.stream().filter(cart -> cart.getId() == idCart)
-                    .findAny().get()
-                    .getProductList().add(productRepository.findById(idProduct).get());
-            return true;
-        } else return false;
+        if (productRepository.findById(idProduct).isPresent()) {
+            Optional<Cart> cart = carts.stream().filter(cartt -> cartt.getId() == idCart).findAny();
+                    if (cart.isPresent()) {
+                        cart.get().getProductList().add(productRepository.findById(idProduct).get());
+                        return true;
+                    }
+    
+        } 
+        return false;
     }
     @Override
     public boolean deleteById(long idCart, long idProduct) {
-        if (carts.contains(findById(idCart) ) ){
-            return carts.get(carts.indexOf(findById(idCart))).getProductList().removeIf(product -> product.getId() == idProduct);
+        Optional<Cart> cart = carts.stream().filter(cartt -> cartt.getId() == idCart).findAny();
+        if (cart.isPresent()){
+            return cart.get().getProductList().removeIf(product -> product.getId() == idProduct);
         } return false;
     }
     @Override
     public boolean update(Product product, long idCart) {
-            if (carts.contains(findById(idCart)) && productRepository.findById(product.getId()).isPresent()) {
-                carts.get(carts.indexOf(findById(idCart))).getProductList().get(carts.get(carts.indexOf(findById(idCart))).getProductList().indexOf(product)).setName(product.getName());
-                carts.get(carts.indexOf(findById(idCart))).getProductList().get(carts.get(carts.indexOf(findById(idCart))).getProductList().indexOf(product)).setPrice(product.getPrice());
-                return true;
+            if (productRepository.findById(product.getId()).isPresent()) {
+                Optional<Cart> cart = carts.stream().filter(cartt -> cartt.getId() == idCart).findAny();
+                if (cart.isPresent()) {
+                        cart.get().getProductList().get(cart.get().getProductList().indexOf(productRepository.findById(product.getId()).get())).setName(product.getName());
+                        cart.get().getProductList().get(cart.get().getProductList().indexOf(productRepository.findById(product.getId()).get())).setPrice(product.getPrice());
+                        return true;
+                    }
             }
         return false;
     }

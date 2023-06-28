@@ -24,7 +24,7 @@ public class PaymentController {
         boolean isSum = paymentService.cartSum(idCart);
 
         if (isSum) {
-            return ResponseEntity.accepted().build();
+            return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.notFound().build();
         }

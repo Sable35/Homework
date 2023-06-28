@@ -30,7 +30,7 @@ public class CartController {
     }
 
     @PutMapping("/{idCart}")
-    public ResponseEntity<?> deleteProduct(@PathVariable long idCart,@RequestBody Product product) {
+    public ResponseEntity<?> updateProduct(@PathVariable long idCart,@RequestBody Product product) {
         log.info("обновления продукта {} по idCart {}", idCart, product.getName());
         boolean isUpdated = cartRepository.update(product, idCart);
 
@@ -42,7 +42,7 @@ public class CartController {
     }
 
     @PostMapping("/{idCart}/{idProduct}")
-    public ResponseEntity<?> addProduct(@PathVariable long idProduct, @PathVariable long idCart) {
+    public ResponseEntity<?> addProduct(@PathVariable long idCart, @PathVariable long idProduct) {
         log.info("Добавление продукта по idProduct{}", idProduct);
         boolean isAdded = cartRepository.addProductToCart(idCart,idProduct);
 

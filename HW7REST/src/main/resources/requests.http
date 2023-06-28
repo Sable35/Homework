@@ -1,6 +1,6 @@
 
 ###
-POST localhost:8080/clients
+POST http://localhost:8080/clients
 Content-Type: application/json
 
 {
@@ -11,13 +11,13 @@ Content-Type: application/json
 }
 
 ###
-GET localhost:8080/clients/234
+GET http://localhost:8080/clients/381172
 
 ###
 DELETE localhost:8080/clients/234
 
 ###
-POST localhost:8080/products
+POST http://localhost:8080/products
 Content-Type: application/json
 
 {
@@ -51,28 +51,30 @@ Content-Type: application/json
 }
 
 ###
-GET localhost:8080/products/1
+GET http://localhost:8080/products/221601
 
 ###
-GET localhost:8080/products?name=Морковь
+GET http://localhost:8080/products?name=Морковь
 
 ###
-POST localhost:8080/carts/45645/13463
+POST http://localhost:8080/carts/641999/823957
 
 ###
-PUT localhost:8080/carts/454547/4324
+PUT http://localhost:8080/carts/641999
 Content-Type: application/json
 
 {
+  "id": 823957,
   "amount": 2
 }
 
 
 ###
-DELETE localhost:8080/carts/45645/13463
+DELETE localhost:8080/carts/641999/13463
 
 ###
-POST localhost:8080/payments/45645
+POST http://localhost:8080/payments/286582
+
 
 
 
