@@ -1,0 +1,853 @@
+Index: src/main/java/com/example/webapplicationexample/repository/LocalCartRepository.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.webapplicationexample.repository;\r\n\r\nimport com.example.webapplicationexample.model.Cart;\r\nimport com.example.webapplicationexample.model.Product;\r\n\r\nimport ch.qos.logback.core.joran.conditional.IfAction;\r\n\r\nimport org.springframework.stereotype.Repository;\r\n\r\nimport java.math.BigDecimal;\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\nimport java.util.Optional;\r\n@Repository\r\npublic class LocalCartRepository implements CartRepository{\r\n\r\n    private ProductRepository productRepository;\r\n\r\n    public LocalCartRepository(ProductRepository productRepository) {\r\n        this.productRepository = productRepository;\r\n    }\r\n\r\n    private List<Cart> carts= new ArrayList<>(List.of(\r\n    ));\r\n\r\n    @Override\r\n    public void addCart(Cart cart){\r\n        carts.add(cart);\r\n    }\r\n    @Override\r\n    public boolean addProductToCart(long idCart,long idProduct){\r\n        if (productRepository.findById(idProduct).isPresent()) {\r\n            Optional<Cart> cart = carts.stream().filter(cartt -> cartt.getId() == idCart).findAny();\r\n                    if (cart.isPresent()) {\r\n                        cart.get().getProductList().add(productRepository.findById(idProduct).get());\r\n                        return true;\r\n                    }\r\n    \r\n        } \r\n        return false;\r\n    }\r\n    @Override\r\n    public boolean deleteById(long idCart, long idProduct) {\r\n        Optional<Cart> cart = carts.stream().filter(cartt -> cartt.getId() == idCart).findAny();\r\n        if (cart.isPresent()){\r\n            return cart.get().getProductList().removeIf(product -> product.getId() == idProduct);\r\n        } return false;\r\n    }\r\n    @Override\r\n    public boolean update(Product product, long idCart) {\r\n            if (productRepository.findById(product.getId()).isPresent()) {\r\n                Optional<Cart> cart = carts.stream().filter(cartt -> cartt.getId() == idCart).findAny();\r\n                if (cart.isPresent()) {\r\n                        cart.get().getProductList().get(cart.get().getProductList().indexOf(productRepository.findById(product.getId()).get())).setName(product.getName());\r\n                        cart.get().getProductList().get(cart.get().getProductList().indexOf(productRepository.findById(product.getId()).get())).setPrice(product.getPrice());\r\n                        return true;\r\n                    }\r\n            }\r\n        return false;\r\n    }\r\n\r\n    public Optional<Cart> findById(long id) {\r\n        return carts.stream()\r\n                .filter(cart -> cart.getId() == id)\r\n                .findAny();\r\n    }\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/webapplicationexample/repository/LocalCartRepository.java b/src/main/java/com/example/webapplicationexample/repository/LocalCartRepository.java
+--- a/src/main/java/com/example/webapplicationexample/repository/LocalCartRepository.java	
++++ b/src/main/java/com/example/webapplicationexample/repository/LocalCartRepository.java	
+@@ -8,62 +8,75 @@
+ import org.springframework.stereotype.Repository;
+ 
+ import java.math.BigDecimal;
++import java.sql.DriverManager;
++import java.sql.ResultSet;
++import java.sql.SQLException;
++import java.sql.Statement;
+ import java.util.ArrayList;
+ import java.util.List;
+ import java.util.Optional;
+ @Repository
+ public class LocalCartRepository implements CartRepository{
+ 
+-    private ProductRepository productRepository;
+-
+-    public LocalCartRepository(ProductRepository productRepository) {
+-        this.productRepository = productRepository;
+-    }
+-
+-    private List<Cart> carts= new ArrayList<>(List.of(
+-    ));
+-
+-    @Override
+-    public void addCart(Cart cart){
+-        carts.add(cart);
+-    }
++    private static final String JDBC = "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=postgres";
+     @Override
+-    public boolean addProductToCart(long idCart,long idProduct){
+-        if (productRepository.findById(idProduct).isPresent()) {
+-            Optional<Cart> cart = carts.stream().filter(cartt -> cartt.getId() == idCart).findAny();
+-                    if (cart.isPresent()) {
+-                        cart.get().getProductList().add(productRepository.findById(idProduct).get());
+-                        return true;
+-                    }
+-    
+-        } 
+-        return false;
++    public boolean addProductToCart(long idClient,Product product){
++        var insertSql = "INSERT INTO products_sobolev_ma.products_carts (id_product, id_client, amount) VALUES (?,?,?);";
++
++        try (var connection = DriverManager.getConnection(JDBC);
++             var prepareStatement = connection.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS)) {
++            prepareStatement.setLong(1, product.getId());
++            prepareStatement.setLong(2, idClient);
++            prepareStatement.setInt(3, product.getAmount());
++
++            prepareStatement.executeUpdate();
++
++            ResultSet rs = prepareStatement.getGeneratedKeys();
++            if (rs.next()) {
++                return true;
++            } else {
++                return false;
++            }
++        } catch (SQLException e) {
++            throw new RuntimeException(e);
++        }
+     }
+     @Override
+-    public boolean deleteById(long idCart, long idProduct) {
+-        Optional<Cart> cart = carts.stream().filter(cartt -> cartt.getId() == idCart).findAny();
+-        if (cart.isPresent()){
+-            return cart.get().getProductList().removeIf(product -> product.getId() == idProduct);
+-        } return false;
++    public boolean deleteById(long idClient, long idProduct) {
++        var selectSql = "DELETE FROM products_sobolev_ma.products_carts where id_client = ? and id_product = ?";
++
++        try (var connection = DriverManager.getConnection(JDBC);
++             var prepareStatement = connection.prepareStatement(selectSql)) {
++            prepareStatement.setLong(1, idClient);
++            prepareStatement.setLong(2, idProduct);
++
++            var rows = prepareStatement.executeUpdate();
++
++            return rows > 0;
++        } catch (SQLException e) {
++            throw new RuntimeException(e);
++        }
+     }
+     @Override
+-    public boolean update(Product product, long idCart) {
+-            if (productRepository.findById(product.getId()).isPresent()) {
+-                Optional<Cart> cart = carts.stream().filter(cartt -> cartt.getId() == idCart).findAny();
+-                if (cart.isPresent()) {
+-                        cart.get().getProductList().get(cart.get().getProductList().indexOf(productRepository.findById(product.getId()).get())).setName(product.getName());
+-                        cart.get().getProductList().get(cart.get().getProductList().indexOf(productRepository.findById(product.getId()).get())).setPrice(product.getPrice());
+-                        return true;
+-                    }
+-            }
+-        return false;
+-    }
++    public boolean update(Product product, long idClient) {
++        var selectSql = """
++                UPDATE products_sobolev_ma.products_carts
++                SET 
++                amount = ?
++                where id_product = ? and id_client = ?;
++                """;
+ 
+-    public Optional<Cart> findById(long id) {
+-        return carts.stream()
+-                .filter(cart -> cart.getId() == id)
+-                .findAny();
+-    }
++        try (var connection = DriverManager.getConnection(JDBC);
++             var prepareStatement = connection.prepareStatement(selectSql)) {
++            prepareStatement.setInt(1, product.getAmount());
++            prepareStatement.setLong(2, product.getId());
++            prepareStatement.setLong(3, idClient);
+ 
++            var rows = prepareStatement.executeUpdate();
+ 
++            return rows > 0;
++        } catch (SQLException e) {
++            throw new RuntimeException(e);
++        }
++    }
+ }
+Index: src/main/java/com/example/webapplicationexample/repository/LocalClientRepository.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.webapplicationexample.repository;\r\n\r\nimport com.example.webapplicationexample.model.Cart;\r\nimport com.example.webapplicationexample.model.Client;\r\nimport com.example.webapplicationexample.model.Product;\r\nimport org.springframework.stereotype.Repository;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\nimport java.util.Optional;\r\nimport java.util.Random;\r\n@Repository\r\npublic class LocalClientRepository implements ClientRepository{\r\n\r\n\r\n    private CartRepository cartRepository;\r\n\r\n    public LocalClientRepository(CartRepository cartRepository) {\r\n        this.cartRepository = cartRepository;\r\n    }\r\n\r\n    private List<Client> clients = new ArrayList<>(List.of(\r\n    ));\r\n\r\n\r\n\r\n    @Override\r\n    public long save(Client client) {\r\n        long id = generateId();\r\n        client.setId(id);\r\n        Cart cart = new Cart(id,new ArrayList<Product>(),generateId());\r\n        cartRepository.addCart(cart);\r\n        client.setCart(cart);\r\n\r\n        clients.add(client);\r\n        return id;\r\n    }\r\n\r\n    @Override\r\n    public Optional<Client> findById(long id) {\r\n        return clients.stream()\r\n                .filter(product -> product.getId() == id)\r\n                .findAny();\r\n    }\r\n\r\n    @Override\r\n    public boolean deleteById(long id) {\r\n        return clients.removeIf(client -> client.getId() == id);\r\n    }\r\n\r\n    private long generateId() {\r\n        Random random = new Random();\r\n        int low = 1;\r\n        int high = 1_000_000;\r\n        return random.nextLong(high - low) + low;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/webapplicationexample/repository/LocalClientRepository.java b/src/main/java/com/example/webapplicationexample/repository/LocalClientRepository.java
+--- a/src/main/java/com/example/webapplicationexample/repository/LocalClientRepository.java	
++++ b/src/main/java/com/example/webapplicationexample/repository/LocalClientRepository.java	
+@@ -2,9 +2,15 @@
+ 
+ import com.example.webapplicationexample.model.Cart;
+ import com.example.webapplicationexample.model.Client;
++import com.example.webapplicationexample.model.CutClient;
+ import com.example.webapplicationexample.model.Product;
+ import org.springframework.stereotype.Repository;
+ 
++import java.math.BigDecimal;
++import java.sql.DriverManager;
++import java.sql.ResultSet;
++import java.sql.SQLException;
++import java.sql.Statement;
+ import java.util.ArrayList;
+ import java.util.List;
+ import java.util.Optional;
+@@ -12,46 +18,75 @@
+ @Repository
+ public class LocalClientRepository implements ClientRepository{
+ 
+-
+-    private CartRepository cartRepository;
+-
+-    public LocalClientRepository(CartRepository cartRepository) {
+-        this.cartRepository = cartRepository;
+-    }
+-
+-    private List<Client> clients = new ArrayList<>(List.of(
+-    ));
+-
+-
++    private static final String JDBC = "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=postgres";
+ 
+     @Override
+     public long save(Client client) {
+-        long id = generateId();
+-        client.setId(id);
+-        Cart cart = new Cart(id,new ArrayList<Product>(),generateId());
+-        cartRepository.addCart(cart);
+-        client.setCart(cart);
++        var insertSql = "INSERT INTO products_sobolev_ma.clients (name, username, password, email) VALUES (?,?,?,?);";
++
++        try (var connection = DriverManager.getConnection(JDBC);
++             var prepareStatement = connection.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS)) {
++            prepareStatement.setString(1, client.getName());
++            prepareStatement.setString(2, client.getLogin());
++            prepareStatement.setString(3, client.getPassword());
++            prepareStatement.setString(4, client.getEmail());
+ 
+-        clients.add(client);
+-        return id;
++            prepareStatement.executeUpdate();
++
++            ResultSet rs = prepareStatement.getGeneratedKeys();
++            if (rs.next()) {
++                return rs.getInt(1);
++            } else {
++                throw new RuntimeException("Ошибка при получении идентификатора");
++            }
++        } catch (SQLException e) {
++            throw new RuntimeException(e);
++        }
+     }
+ 
+     @Override
+-    public Optional<Client> findById(long id) {
+-        return clients.stream()
+-                .filter(product -> product.getId() == id)
+-                .findAny();
++    public Optional<Client> findById(long idClient) {
++        var selectSql = "SELECT * FROM products_sobolev_ma.clients where id = ?";
++
++        try (var connection = DriverManager.getConnection(JDBC);
++             var prepareStatement = connection.prepareStatement(selectSql)) {
++            prepareStatement.setLong(1, idClient);
++
++            var resultSet = prepareStatement.executeQuery();
++
++            if (resultSet.next()) {
++                long id = resultSet.getLong("id");
++                String name = resultSet.getString("name");
++                String login = resultSet.getString("username");
++                String password = resultSet.getString("password");
++                String email = resultSet.getString("email");
++                String promocode = resultSet.getString("promocode");
++                Client client = new Client(id,name,login,password,email,new Cart(new ArrayList<Product>(), promocode));
++
++                return Optional.of(client);
++            }
++
++            return Optional.empty();
++        } catch (SQLException e) {
++            throw new RuntimeException(e);
++        }
+     }
+ 
+     @Override
+-    public boolean deleteById(long id) {
+-        return clients.removeIf(client -> client.getId() == id);
+-    }
++    public boolean deleteById(long idClient) {
++
++        var selectSql = "DELETE FROM products_sobolev_ma.clients where id = ?";
++
++        try (var connection = DriverManager.getConnection(JDBC);
++             var prepareStatement = connection.prepareStatement(selectSql)) {
++            prepareStatement.setLong(1, idClient);
++
++            var rows = prepareStatement.executeUpdate();
+ 
+-    private long generateId() {
+-        Random random = new Random();
+-        int low = 1;
+-        int high = 1_000_000;
+-        return random.nextLong(high - low) + low;
++            return rows > 0;
++        } catch (SQLException e) {
++            throw new RuntimeException(e);
++        }
+     }
++
+ }
+Index: src/main/resources/requests.http
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\r\n###\r\nPOST http://localhost:8080/clients\r\nContent-Type: application/json\r\n\r\n{\r\n    \"name\": \"HRT\",\r\n    \"login\": \"RTH\",\r\n    \"password\": \"paRTH\",\r\n    \"email\": \"olRTHg@GMAIL.com\"\r\n}\r\n\r\n###\r\nGET http://localhost:8080/clients/381172\r\n\r\n###\r\nDELETE localhost:8080/clients/234\r\n\r\n###\r\nPOST http://localhost:8080/products\r\nContent-Type: application/json\r\n\r\n{\r\n  \"name\": \"Морковь\",\r\n  \"price\": 60,\r\n  \"amount\": 1\r\n}\r\n\r\n###\r\nPUT localhost:8080/products\r\nContent-Type: application/json\r\n\r\n{\r\n  \"id\": 5,\r\n  \"name\": \"Абрикос\",\r\n  \"price\": 70,\r\n  \"amount\": 2\r\n}\r\n\r\n###\r\nDELETE localhost:8080/products/5\r\n\r\n###\r\nGET localhost:8080/clients\r\nContent-Type: application/json\r\n\r\n{\r\n  \"id\": 1,\r\n  \"name\": \"Банан\",\r\n  \"price\": 80\r\n}\r\n\r\n###\r\nGET http://localhost:8080/products/221601\r\n\r\n###\r\nGET http://localhost:8080/products?name=Морковь\r\n\r\n###\r\nPOST http://localhost:8080/carts/641999/823957\r\n\r\n###\r\nPUT http://localhost:8080/carts/641999\r\nContent-Type: application/json\r\n\r\n{\r\n  \"id\": 823957,\r\n  \"amount\": 2\r\n}\r\n\r\n\r\n###\r\nDELETE localhost:8080/carts/641999/13463\r\n\r\n###\r\nPOST http://localhost:8080/payments/286582\r\n\r\n\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/requests.http b/src/main/resources/requests.http
+--- a/src/main/resources/requests.http	
++++ b/src/main/resources/requests.http	
+@@ -1,6 +1,6 @@
+ 
+ ###
+-POST http://localhost:8080/clients
++POST localhost:8080/clients
+ Content-Type: application/json
+ 
+ {
+@@ -11,10 +11,10 @@
+ }
+ 
+ ###
+-GET http://localhost:8080/clients/381172
++GET localhost:8080/clients/1
+ 
+ ###
+-DELETE localhost:8080/clients/234
++DELETE localhost:8080/clients/1
+ 
+ ###
+ POST http://localhost:8080/products
+@@ -22,8 +22,7 @@
+ 
+ {
+   "name": "Морковь",
+-  "price": 60,
+-  "amount": 1
++  "price": 60
+ }
+ 
+ ###
+@@ -31,49 +30,44 @@
+ Content-Type: application/json
+ 
+ {
+-  "id": 5,
++  "id": 1,
+   "name": "Абрикос",
+-  "price": 70,
+-  "amount": 2
++  "price": 70
+ }
+ 
+ ###
+-DELETE localhost:8080/products/5
+-
+-###
+-GET localhost:8080/clients
+-Content-Type: application/json
+-
+-{
+-  "id": 1,
+-  "name": "Банан",
+-  "price": 80
+-}
++DELETE localhost:8080/products/1
+ 
+ ###
+-GET http://localhost:8080/products/221601
++GET http://localhost:8080/products/2
+ 
+ ###
+ GET http://localhost:8080/products?name=Морковь
+ 
+ ###
+-POST http://localhost:8080/carts/641999/823957
+-
+-###
+-PUT http://localhost:8080/carts/641999
++POST http://localhost:8080/carts/2
+ Content-Type: application/json
+ 
+ {
+-  "id": 823957,
++  "id": 2,
+   "amount": 2
+ }
+ 
++###
++PUT http://localhost:8080/carts/2
++Content-Type: application/json
++
++{
++  "id": 2,
++  "amount": 3
++}
++
+ 
+ ###
+-DELETE localhost:8080/carts/641999/13463
++DELETE http://localhost:8080/carts/2/2
+ 
+ ###
+-POST http://localhost:8080/payments/286582
++POST http://localhost:8080/payments/2
+ 
+ 
+ 
+Index: src/main/java/com/example/webapplicationexample/controller/CartController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.webapplicationexample.controller;\r\n\r\nimport com.example.webapplicationexample.model.Product;\r\nimport com.example.webapplicationexample.repository.CartRepository;\r\nimport lombok.extern.slf4j.Slf4j;\r\nimport org.springframework.http.ResponseEntity;\r\nimport org.springframework.web.bind.annotation.*;\r\n\r\n@Slf4j\r\n@RestController\r\n@RequestMapping(\"carts\")\r\npublic class CartController {\r\n\r\n    private CartRepository cartRepository;\r\n\r\n    public CartController(CartRepository cartRepository) {\r\n        this.cartRepository = cartRepository;\r\n    }\r\n\r\n    @DeleteMapping(\"/{idCart}/{idProduct}\")\r\n    public ResponseEntity<?> deleteProduct(@PathVariable long idProduct, @PathVariable long idCart) {\r\n        log.info(\"Удаление клиента по idCart {} idProduct {}\", idCart, idProduct);\r\n        boolean isDeleted = cartRepository.deleteById(idCart, idProduct);\r\n\r\n        if (isDeleted) {\r\n            return ResponseEntity.noContent().build();\r\n        } else {\r\n            return ResponseEntity.notFound().build();\r\n        }\r\n    }\r\n\r\n    @PutMapping(\"/{idCart}\")\r\n    public ResponseEntity<?> updateProduct(@PathVariable long idCart,@RequestBody Product product) {\r\n        log.info(\"обновления продукта {} по idCart {}\", idCart, product.getName());\r\n        boolean isUpdated = cartRepository.update(product, idCart);\r\n\r\n        if (isUpdated) {\r\n            return ResponseEntity.ok().build();\r\n        } else {\r\n            return ResponseEntity.notFound().build();\r\n        }\r\n    }\r\n\r\n    @PostMapping(\"/{idCart}/{idProduct}\")\r\n    public ResponseEntity<?> addProduct(@PathVariable long idCart, @PathVariable long idProduct) {\r\n        log.info(\"Добавление продукта по idProduct{}\", idProduct);\r\n        boolean isAdded = cartRepository.addProductToCart(idCart,idProduct);\r\n\r\n        if (isAdded) {\r\n            return ResponseEntity.ok().build();\r\n        } else {\r\n            return ResponseEntity.notFound().build();\r\n        }\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/webapplicationexample/controller/CartController.java b/src/main/java/com/example/webapplicationexample/controller/CartController.java
+--- a/src/main/java/com/example/webapplicationexample/controller/CartController.java	
++++ b/src/main/java/com/example/webapplicationexample/controller/CartController.java	
+@@ -17,10 +17,10 @@
+         this.cartRepository = cartRepository;
+     }
+ 
+-    @DeleteMapping("/{idCart}/{idProduct}")
+-    public ResponseEntity<?> deleteProduct(@PathVariable long idProduct, @PathVariable long idCart) {
+-        log.info("Удаление клиента по idCart {} idProduct {}", idCart, idProduct);
+-        boolean isDeleted = cartRepository.deleteById(idCart, idProduct);
++    @DeleteMapping("/{idClient}/{idProduct}")
++    public ResponseEntity<?> deleteProduct(@PathVariable long idProduct, @PathVariable long idClient) {
++        log.info("Удаление продукта по idClient {} idProduct {}", idClient, idProduct);
++        boolean isDeleted = cartRepository.deleteById(idClient, idProduct);
+ 
+         if (isDeleted) {
+             return ResponseEntity.noContent().build();
+@@ -29,10 +29,10 @@
+         }
+     }
+ 
+-    @PutMapping("/{idCart}")
+-    public ResponseEntity<?> updateProduct(@PathVariable long idCart,@RequestBody Product product) {
+-        log.info("обновления продукта {} по idCart {}", idCart, product.getName());
+-        boolean isUpdated = cartRepository.update(product, idCart);
++    @PutMapping("/{idClient}")
++    public ResponseEntity<?> updateProduct(@PathVariable long idClient,@RequestBody Product product) {
++        log.info("обновления продукта {} по idClient {}", idClient, product.getName());
++        boolean isUpdated = cartRepository.update(product, idClient);
+ 
+         if (isUpdated) {
+             return ResponseEntity.ok().build();
+@@ -41,10 +41,10 @@
+         }
+     }
+ 
+-    @PostMapping("/{idCart}/{idProduct}")
+-    public ResponseEntity<?> addProduct(@PathVariable long idCart, @PathVariable long idProduct) {
+-        log.info("Добавление продукта по idProduct{}", idProduct);
+-        boolean isAdded = cartRepository.addProductToCart(idCart,idProduct);
++    @PostMapping("/{idClient}")
++    public ResponseEntity<?> addProduct(@PathVariable long idClient, @RequestBody Product product) {
++        log.info("Добавление продукта ", product);
++        boolean isAdded = cartRepository.addProductToCart(idClient, product);
+ 
+         if (isAdded) {
+             return ResponseEntity.ok().build();
+Index: src/main/resources/data.sql
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/data.sql b/src/main/resources/data.sql
+new file mode 100644
+--- /dev/null	
++++ b/src/main/resources/data.sql	
+@@ -0,0 +1,29 @@
++create schema if not exists products_sobolev_ma;
++
++create  table products_sobolev_ma.products
++(
++    id    integer generated always as identity
++    primary key,
++    name  varchar(255) not null,
++    price numeric      not null
++    );
++
++create table products_sobolev_ma.clients
++(
++    id       integer generated always as identity primary key ,
++    name     varchar(255) not null,
++    username varchar(255) not null,
++    password varchar(255) not null,
++    email varchar(255) not null,
++    promocode varchar(255)
++    );
++
++create table products_sobolev_ma.products_carts
++(   id_product integer not null
++    constraint products_id_fk
++    references products_sobolev_ma.products,
++    id_client    integer not null
++    constraint clients_id_fk
++    references products_sobolev_ma.clients,
++    count      integer not null
++);
+\ No newline at end of file
+Index: .idea/dataSources.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/dataSources.xml b/.idea/dataSources.xml
+new file mode 100644
+--- /dev/null	
++++ b/.idea/dataSources.xml	
+@@ -0,0 +1,12 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
++    <data-source source="LOCAL" name="postgres@localhost" uuid="96049d3b-96aa-4551-afab-d4a42f6f6dc1">
++      <driver-ref>postgresql</driver-ref>
++      <synchronize>true</synchronize>
++      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
++      <jdbc-url>jdbc:postgresql://localhost:5432/postgres</jdbc-url>
++      <working-dir>$ProjectFileDir$</working-dir>
++    </data-source>
++  </component>
++</project>
+\ No newline at end of file
+Index: src/main/java/com/example/webapplicationexample/repository/ClientRepository.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.webapplicationexample.repository;\r\n\r\nimport com.example.webapplicationexample.model.Client;\r\n\r\nimport java.util.Optional;\r\n\r\npublic interface ClientRepository {\r\n\r\n    public Optional<Client> findById(long id);\r\n    long save(Client client);\r\n    boolean deleteById(long id);\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/webapplicationexample/repository/ClientRepository.java b/src/main/java/com/example/webapplicationexample/repository/ClientRepository.java
+--- a/src/main/java/com/example/webapplicationexample/repository/ClientRepository.java	
++++ b/src/main/java/com/example/webapplicationexample/repository/ClientRepository.java	
+@@ -1,12 +1,13 @@
+ package com.example.webapplicationexample.repository;
+ 
+ import com.example.webapplicationexample.model.Client;
++import com.example.webapplicationexample.model.CutClient;
+ 
+ import java.util.Optional;
+ 
+ public interface ClientRepository {
+ 
+-    public Optional<Client> findById(long id);
++    public Optional<Client> findById(long idClient);
+     long save(Client client);
+     boolean deleteById(long id);
+ }
+Index: src/main/java/com/example/webapplicationexample/repository/CartRepository.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.webapplicationexample.repository;\r\n\r\nimport com.example.webapplicationexample.model.Cart;\r\nimport com.example.webapplicationexample.model.Product;\r\n\r\nimport java.util.Optional;\r\n\r\npublic interface CartRepository {\r\n    void addCart(Cart cart);\r\n\r\n    boolean deleteById(long idCart, long idProduct);\r\n    boolean addProductToCart(long idCart,long idProduct);\r\n    boolean update(Product product, long idCart);\r\n    Optional<Cart> findById(long id);\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/webapplicationexample/repository/CartRepository.java b/src/main/java/com/example/webapplicationexample/repository/CartRepository.java
+--- a/src/main/java/com/example/webapplicationexample/repository/CartRepository.java	
++++ b/src/main/java/com/example/webapplicationexample/repository/CartRepository.java	
+@@ -6,11 +6,8 @@
+ import java.util.Optional;
+ 
+ public interface CartRepository {
+-    void addCart(Cart cart);
+ 
+     boolean deleteById(long idCart, long idProduct);
+-    boolean addProductToCart(long idCart,long idProduct);
++    public boolean addProductToCart(long idClient,Product product);
+     boolean update(Product product, long idCart);
+-    Optional<Cart> findById(long id);
+-
+ }
+Index: src/main/java/com/example/webapplicationexample/repository/LocalProductRepository.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.webapplicationexample.repository;\r\n\r\nimport com.example.webapplicationexample.model.Product;\r\nimport org.springframework.stereotype.Repository;\r\n\r\nimport java.math.BigDecimal;\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\nimport java.util.Optional;\r\nimport java.util.Random;\r\n\r\n@Repository\r\npublic class LocalProductRepository implements ProductRepository {\r\n    private List<Product> products = new ArrayList<>(List.of(\r\n    ));\r\n\r\n    @Override\r\n    public long save(Product product) {\r\n        long id = generateId();\r\n        product.setId(id);\r\n\r\n        products.add(product);\r\n        return id;\r\n    }\r\n\r\n    @Override\r\n    public Optional<Product> findById(long id) {\r\n        return products.stream()\r\n                .filter(product -> product.getId() == id)\r\n                .findAny();\r\n    }\r\n\r\n    @Override\r\n    public List<Product> findAll(String name) {\r\n        if (name == null) {\r\n            return products;\r\n        }\r\n\r\n        return products.stream()\r\n                .filter(product -> product.getName().equals(name))\r\n                .toList();\r\n    }\r\n\r\n    @Override\r\n    public boolean update(Product product) {\r\n        for (Product p : products) {\r\n            if (p.getId() == product.getId()) {\r\n                p.setName(product.getName());\r\n                p.setPrice(product.getPrice());\r\n\r\n                return true;\r\n            }\r\n        }\r\n\r\n        return false;\r\n    }\r\n\r\n    @Override\r\n    public boolean deleteById(long id) {\r\n        return products.removeIf(product -> product.getId() == id);\r\n    }\r\n\r\n    private long generateId() {\r\n        Random random = new Random();\r\n        int low = 1;\r\n        int high = 1_000_000;\r\n        return random.nextLong(high - low) + low;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/webapplicationexample/repository/LocalProductRepository.java b/src/main/java/com/example/webapplicationexample/repository/LocalProductRepository.java
+--- a/src/main/java/com/example/webapplicationexample/repository/LocalProductRepository.java	
++++ b/src/main/java/com/example/webapplicationexample/repository/LocalProductRepository.java	
+@@ -4,66 +4,131 @@
+ import org.springframework.stereotype.Repository;
+ 
+ import java.math.BigDecimal;
++import java.sql.DriverManager;
++import java.sql.ResultSet;
++import java.sql.SQLException;
++import java.sql.Statement;
+ import java.util.ArrayList;
+ import java.util.List;
+ import java.util.Optional;
+ import java.util.Random;
+ 
++
+ @Repository
+ public class LocalProductRepository implements ProductRepository {
+-    private List<Product> products = new ArrayList<>(List.of(
+-    ));
++    private static final String JDBC = "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=postgres";
+ 
+     @Override
+     public long save(Product product) {
+-        long id = generateId();
+-        product.setId(id);
++        var insertSql = "INSERT INTO products_sobolev_ma.products (name, price) VALUES (?,?);";
++
++        try (var connection = DriverManager.getConnection(JDBC);
++             var prepareStatement = connection.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS)) {
++            prepareStatement.setString(1, product.getName());
++            prepareStatement.setDouble(2, product.getPrice().doubleValue());
+ 
+-        products.add(product);
+-        return id;
++            prepareStatement.executeUpdate();
++
++            ResultSet rs = prepareStatement.getGeneratedKeys();
++            if (rs.next()) {
++                return rs.getInt(1);
++            } else {
++                throw new RuntimeException("Ошибка при получении идентификатора");
++            }
++        } catch (SQLException e) {
++            throw new RuntimeException(e);
++        }
+     }
+ 
+     @Override
+-    public Optional<Product> findById(long id) {
+-        return products.stream()
+-                .filter(product -> product.getId() == id)
+-                .findAny();
++    public Optional<Product> findById(long idProduct) {
++        var selectSql = "SELECT * FROM products_sobolev_ma.products where id = ?";
++
++        try (var connection = DriverManager.getConnection(JDBC);
++             var prepareStatement = connection.prepareStatement(selectSql)) {
++            prepareStatement.setLong(1, idProduct);
++
++            var resultSet = prepareStatement.executeQuery();
++
++            if (resultSet.next()) {
++                int id = resultSet.getInt("id");
++                String name = resultSet.getString("name");
++                double price = resultSet.getDouble("price");
++                Product product = new Product(id, name,0, BigDecimal.valueOf(price));
++
++                return Optional.of(product);
++            }
++
++            return Optional.empty();
++        } catch (SQLException e) {
++            throw new RuntimeException(e);
++        }
+     }
+ 
+     @Override
+-    public List<Product> findAll(String name) {
+-        if (name == null) {
++    public List<Product> findAll(String nameProduct) {
++        var selectSql = "SELECT * FROM products_sobolev_ma.products where name like ?";
++        List<Product> products = new ArrayList<>();
++
++        try (var connection = DriverManager.getConnection(JDBC);
++             var prepareStatement = connection.prepareStatement(selectSql)) {
++            prepareStatement.setString(1, "%" + (nameProduct == null ? "" : nameProduct) + "%");
++
++            var resultSet = prepareStatement.executeQuery();
++            while (resultSet.next()) {
++                int id = resultSet.getInt("id");
++                String name = resultSet.getString("name");
++                double price = resultSet.getDouble("price");
++                Product product = new Product(id, name,0, BigDecimal.valueOf(price));
++
++                products.add(product);
++            }
++
+             return products;
++        } catch (SQLException e) {
++            throw new RuntimeException(e);
+         }
+-
+-        return products.stream()
+-                .filter(product -> product.getName().equals(name))
+-                .toList();
+     }
+ 
+     @Override
+     public boolean update(Product product) {
+-        for (Product p : products) {
+-            if (p.getId() == product.getId()) {
+-                p.setName(product.getName());
+-                p.setPrice(product.getPrice());
++        var selectSql = """
++                UPDATE products_sobolev_ma.products
++                SET 
++                name = ?,
++                price = ?
++                where id = ?;
++                """;
++
++        try (var connection = DriverManager.getConnection(JDBC);
++             var prepareStatement = connection.prepareStatement(selectSql)) {
++            prepareStatement.setString(1, product.getName());
++            prepareStatement.setDouble(2, product.getPrice().doubleValue());
++            prepareStatement.setLong(3, product.getId());
+ 
+-                return true;
+-            }
++            var rows = prepareStatement.executeUpdate();
++
++            return rows > 0;
++        } catch (SQLException e) {
++            throw new RuntimeException(e);
+         }
+ 
+-        return false;
+     }
+ 
+     @Override
+-    public boolean deleteById(long id) {
+-        return products.removeIf(product -> product.getId() == id);
+-    }
+-
+-    private long generateId() {
+-        Random random = new Random();
+-        int low = 1;
+-        int high = 1_000_000;
+-        return random.nextLong(high - low) + low;
++    public boolean deleteById(long idProduct) {
++        var selectSql = "DELETE FROM products_sobolev_ma.products where id = ?";
++
++        try (var connection = DriverManager.getConnection(JDBC);
++             var prepareStatement = connection.prepareStatement(selectSql)) {
++            prepareStatement.setLong(1, idProduct);
++
++            var rows = prepareStatement.executeUpdate();
++
++            return rows > 0;
++        } catch (SQLException e) {
++            throw new RuntimeException(e);
++        }
+     }
++
+ }
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/vcs.xml b/.idea/vcs.xml
+new file mode 100644
+--- /dev/null	
++++ b/.idea/vcs.xml	
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="VcsDirectoryMappings">
++    <mapping directory="$PROJECT_DIR$/.." vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
+Index: pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n         xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd\">\r\n    <modelVersion>4.0.0</modelVersion>\r\n    <parent>\r\n        <groupId>org.springframework.boot</groupId>\r\n        <artifactId>spring-boot-starter-parent</artifactId>\r\n        <version>3.1.0</version>\r\n        <relativePath/> <!-- lookup parent from repository -->\r\n    </parent>\r\n    <groupId>com.example</groupId>\r\n    <artifactId>HW7REST</artifactId>\r\n    <version>0.0.1-SNAPSHOT</version>\r\n    <name>web-application-example</name>\r\n    <description>web-application-example</description>\r\n    <properties>\r\n        <java.version>17</java.version>\r\n    </properties>\r\n    <dependencies>\r\n        <dependency>\r\n            <groupId>org.springframework.boot</groupId>\r\n            <artifactId>spring-boot-starter-thymeleaf</artifactId>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>org.springframework.boot</groupId>\r\n            <artifactId>spring-boot-starter-web</artifactId>\r\n        </dependency>\r\n\r\n        <dependency>\r\n            <groupId>org.projectlombok</groupId>\r\n            <artifactId>lombok</artifactId>\r\n        </dependency>\r\n\r\n\r\n        <dependency>\r\n            <groupId>org.springframework.boot</groupId>\r\n            <artifactId>spring-boot-starter-test</artifactId>\r\n            <scope>test</scope>\r\n        </dependency>\r\n    </dependencies>\r\n\r\n    <build>\r\n        <plugins>\r\n            <plugin>\r\n                <groupId>org.springframework.boot</groupId>\r\n                <artifactId>spring-boot-maven-plugin</artifactId>\r\n            </plugin>\r\n        </plugins>\r\n    </build>\r\n\r\n</project>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/pom.xml b/pom.xml
+--- a/pom.xml	
++++ b/pom.xml	
+@@ -31,6 +31,10 @@
+             <artifactId>lombok</artifactId>
+         </dependency>
+ 
++        <dependency>
++            <groupId>org.postgresql</groupId>
++            <artifactId>postgresql</artifactId>
++        </dependency>
+ 
+         <dependency>
+             <groupId>org.springframework.boot</groupId>
+Index: src/main/java/com/example/webapplicationexample/controller/PaymentController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.webapplicationexample.controller;\r\n\r\nimport com.example.webapplicationexample.services.PaymentService;\r\nimport lombok.extern.slf4j.Slf4j;\r\nimport org.springframework.http.ResponseEntity;\r\nimport org.springframework.web.bind.annotation.PathVariable;\r\nimport org.springframework.web.bind.annotation.PostMapping;\r\nimport org.springframework.web.bind.annotation.RequestMapping;\r\nimport org.springframework.web.bind.annotation.RestController;\r\n@Slf4j\r\n@RestController\r\n@RequestMapping(\"payments\")\r\npublic class PaymentController {\r\n\r\n    private PaymentService paymentService;\r\n\r\n    public PaymentController(PaymentService paymentService) {\r\n        this.paymentService = paymentService;\r\n    }\r\n\r\n    @PostMapping(\"/{idCart}\")\r\n    public ResponseEntity<?> SumToPay(@PathVariable long idCart) {\r\n        log.info(\"Подсчет суммы корзины по idCart {}\", idCart);\r\n        boolean isSum = paymentService.cartSum(idCart);\r\n\r\n        if (isSum) {\r\n            return ResponseEntity.ok().build();\r\n        } else {\r\n            return ResponseEntity.notFound().build();\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/webapplicationexample/controller/PaymentController.java b/src/main/java/com/example/webapplicationexample/controller/PaymentController.java
+--- a/src/main/java/com/example/webapplicationexample/controller/PaymentController.java	
++++ b/src/main/java/com/example/webapplicationexample/controller/PaymentController.java	
+@@ -18,10 +18,10 @@
+         this.paymentService = paymentService;
+     }
+ 
+-    @PostMapping("/{idCart}")
+-    public ResponseEntity<?> SumToPay(@PathVariable long idCart) {
+-        log.info("Подсчет суммы корзины по idCart {}", idCart);
+-        boolean isSum = paymentService.cartSum(idCart);
++    @PostMapping("/{idClient}")
++    public ResponseEntity<?> SumToPay(@PathVariable long idClient) {
++        log.info("Подсчет суммы корзины по idClient {}", idClient);
++        boolean isSum = paymentService.cartSum(idClient);
+ 
+         if (isSum) {
+             return ResponseEntity.ok().build();
+Index: src/main/java/com/example/webapplicationexample/model/Cart.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.webapplicationexample.model;\r\n\r\nimport lombok.AllArgsConstructor;\r\nimport lombok.Data;\r\n\r\nimport java.util.List;\r\n\r\n@Data\r\n@AllArgsConstructor\r\npublic class Cart {\r\n    private long id;\r\n    private List<Product> productList;\r\n    private long promoCode;\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/webapplicationexample/model/Cart.java b/src/main/java/com/example/webapplicationexample/model/Cart.java
+--- a/src/main/java/com/example/webapplicationexample/model/Cart.java	
++++ b/src/main/java/com/example/webapplicationexample/model/Cart.java	
+@@ -8,7 +8,6 @@
+ @Data
+ @AllArgsConstructor
+ public class Cart {
+-    private long id;
+     private List<Product> productList;
+-    private long promoCode;
++    private String promoCode;
+ }
+Index: src/main/java/com/example/webapplicationexample/services/LocalPaymentService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.webapplicationexample.services;\r\n\r\nimport com.example.webapplicationexample.repository.CartRepository;\r\nimport org.springframework.stereotype.Service;\r\n\r\nimport java.math.BigDecimal;\r\nimport java.util.Optional;\r\n@Service\r\npublic class LocalPaymentService implements PaymentService{\r\n\r\n    private CartRepository cartRepository;\r\n\r\n    public LocalPaymentService(CartRepository cartRepository) {\r\n        this.cartRepository = cartRepository;\r\n    }\r\n    @Override\r\n    public boolean cartSum(long idCart) {\r\n        if (cartRepository.findById(idCart).isPresent()) {\r\n            cartRepository.findById(idCart).get().getProductList().stream().map(product -> product.getPrice().multiply(BigDecimal.valueOf(product.getAmount()))).reduce(BigDecimal.ZERO,BigDecimal::add);\r\n            return true;\r\n        } else return false;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/webapplicationexample/services/LocalPaymentService.java b/src/main/java/com/example/webapplicationexample/services/LocalPaymentService.java
+--- a/src/main/java/com/example/webapplicationexample/services/LocalPaymentService.java	
++++ b/src/main/java/com/example/webapplicationexample/services/LocalPaymentService.java	
+@@ -1,23 +1,42 @@
+ package com.example.webapplicationexample.services;
+ 
++import com.example.webapplicationexample.model.Product;
+ import com.example.webapplicationexample.repository.CartRepository;
+ import org.springframework.stereotype.Service;
+ 
+ import java.math.BigDecimal;
++import java.sql.DriverManager;
++import java.sql.SQLException;
++import java.util.ArrayList;
++import java.util.List;
+ import java.util.Optional;
+ @Service
+ public class LocalPaymentService implements PaymentService{
+ 
+-    private CartRepository cartRepository;
++    private static final String JDBC = "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=postgres";
+ 
+-    public LocalPaymentService(CartRepository cartRepository) {
+-        this.cartRepository = cartRepository;
+-    }
+     @Override
+-    public boolean cartSum(long idCart) {
+-        if (cartRepository.findById(idCart).isPresent()) {
+-            cartRepository.findById(idCart).get().getProductList().stream().map(product -> product.getPrice().multiply(BigDecimal.valueOf(product.getAmount()))).reduce(BigDecimal.ZERO,BigDecimal::add);
++    public boolean cartSum(long idClient) {
++        var selectSql = """
++                            SELECT price, amount
++                            FROM products_sobolev_ma.products_carts pc
++                            join products_sobolev_ma.products p on p.id=pc.id_product
++                            where pc.id_client = ?""";
++
++        try (var connection = DriverManager.getConnection(JDBC);
++             var prepareStatement = connection.prepareStatement(selectSql)) {
++            prepareStatement.setLong(1, idClient);
++            BigDecimal sum = BigDecimal.valueOf(0);
++            var resultSet = prepareStatement.executeQuery();
++            while (resultSet.next()) {
++                int amount = resultSet.getInt("amount");
++                double price = resultSet.getDouble("price");
++                sum.add(BigDecimal.valueOf(price*amount));
++            }
++
+             return true;
+-        } else return false;
++        } catch (SQLException e) {
++            throw new RuntimeException(e);
++        }
+     }
+ }

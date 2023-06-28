@@ -1,0 +1,6 @@
+{
+  "timestamp": "2023-06-28T22:47:26.301+00:00",
+  "status": 405,
+  "error": "Method Not Allowed",
+  "path": "/carts/2/2"
+}
