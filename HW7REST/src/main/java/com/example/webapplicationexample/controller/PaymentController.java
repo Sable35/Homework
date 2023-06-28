@@ -18,10 +18,10 @@ public class PaymentController {
         this.paymentService = paymentService;
     }
 
-    @PostMapping("/{idCart}")
-    public ResponseEntity<?> SumToPay(@PathVariable long idCart) {
-        log.info("Подсчет суммы корзины по idCart {}", idCart);
-        boolean isSum = paymentService.cartSum(idCart);
+    @PostMapping("/{idClient}")
+    public ResponseEntity<?> SumToPay(@PathVariable long idClient) {
+        log.info("Подсчет суммы корзины по idClient {}", idClient);
+        boolean isSum = paymentService.cartSum(idClient);
 
         if (isSum) {
             return ResponseEntity.ok().build();

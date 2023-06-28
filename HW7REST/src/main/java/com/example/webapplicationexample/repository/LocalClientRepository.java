@@ -2,9 +2,15 @@ package com.example.webapplicationexample.repository;
 
 import com.example.webapplicationexample.model.Cart;
 import com.example.webapplicationexample.model.Client;
+import com.example.webapplicationexample.model.CutClient;
 import com.example.webapplicationexample.model.Product;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -12,46 +18,75 @@ import java.util.Random;
 @Repository
 public class LocalClientRepository implements ClientRepository{
 
-
-    private CartRepository cartRepository;
-
-    public LocalClientRepository(CartRepository cartRepository) {
-        this.cartRepository = cartRepository;
-    }
-
-    private List<Client> clients = new ArrayList<>(List.of(
-    ));
-
-
+    private static final String JDBC = "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=postgres";
 
     @Override
     public long save(Client client) {
-        long id = generateId();
-        client.setId(id);
-        Cart cart = new Cart(id,new ArrayList<Product>(),generateId());
-        cartRepository.addCart(cart);
-        client.setCart(cart);
+        var insertSql = "INSERT INTO products_sobolev_ma.clients (name, username, password, email) VALUES (?,?,?,?);";
 
-        clients.add(client);
-        return id;
+        try (var connection = DriverManager.getConnection(JDBC);
+             var prepareStatement = connection.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS)) {
+            prepareStatement.setString(1, client.getName());
+            prepareStatement.setString(2, client.getLogin());
+            prepareStatement.setString(3, client.getPassword());
+            prepareStatement.setString(4, client.getEmail());
+
+            prepareStatement.executeUpdate();
+
+            ResultSet rs = prepareStatement.getGeneratedKeys();
+            if (rs.next()) {
+                return rs.getInt(1);
+            } else {
+                throw new RuntimeException("Ошибка при получении идентификатора");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
-    public Optional<Client> findById(long id) {
-        return clients.stream()
-                .filter(product -> product.getId() == id)
-                .findAny();
+    public Optional<Client> findById(long idClient) {
+        var selectSql = "SELECT * FROM products_sobolev_ma.clients where id = ?";
+
+        try (var connection = DriverManager.getConnection(JDBC);
+             var prepareStatement = connection.prepareStatement(selectSql)) {
+            prepareStatement.setLong(1, idClient);
+
+            var resultSet = prepareStatement.executeQuery();
+
+            if (resultSet.next()) {
+                long id = resultSet.getLong("id");
+                String name = resultSet.getString("name");
+                String login = resultSet.getString("username");
+                String password = resultSet.getString("password");
+                String email = resultSet.getString("email");
+                String promocode = resultSet.getString("promocode");
+                Client client = new Client(id,name,login,password,email,new Cart(new ArrayList<Product>(), promocode));
+
+                return Optional.of(client);
+            }
+
+            return Optional.empty();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
-    public boolean deleteById(long id) {
-        return clients.removeIf(client -> client.getId() == id);
+    public boolean deleteById(long idClient) {
+
+        var selectSql = "DELETE FROM products_sobolev_ma.clients where id = ?";
+
+        try (var connection = DriverManager.getConnection(JDBC);
+             var prepareStatement = connection.prepareStatement(selectSql)) {
+            prepareStatement.setLong(1, idClient);
+
+            var rows = prepareStatement.executeUpdate();
+
+            return rows > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    private long generateId() {
-        Random random = new Random();
-        int low = 1;
-        int high = 1_000_000;
-        return random.nextLong(high - low) + low;
-    }
 }

@@ -8,7 +8,6 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public class Cart {
-    private long id;
     private List<Product> productList;
-    private long promoCode;
+    private String promoCode;
 }

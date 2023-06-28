@@ -4,66 +4,131 @@ import com.example.webapplicationexample.model.Product;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
+
 @Repository
 public class LocalProductRepository implements ProductRepository {
-    private List<Product> products = new ArrayList<>(List.of(
-    ));
+    private static final String JDBC = "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=postgres";
 
     @Override
     public long save(Product product) {
-        long id = generateId();
-        product.setId(id);
+        var insertSql = "INSERT INTO products_sobolev_ma.products (name, price) VALUES (?,?);";
 
-        products.add(product);
-        return id;
-    }
+        try (var connection = DriverManager.getConnection(JDBC);
+             var prepareStatement = connection.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS)) {
+            prepareStatement.setString(1, product.getName());
+            prepareStatement.setDouble(2, product.getPrice().doubleValue());
 
-    @Override
-    public Optional<Product> findById(long id) {
-        return products.stream()
-                .filter(product -> product.getId() == id)
-                .findAny();
-    }
+            prepareStatement.executeUpdate();
 
-    @Override
-    public List<Product> findAll(String name) {
-        if (name == null) {
-            return products;
+            ResultSet rs = prepareStatement.getGeneratedKeys();
+            if (rs.next()) {
+                return rs.getInt(1);
+            } else {
+                throw new RuntimeException("Ошибка при получении идентификатора");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
+    }
 
-        return products.stream()
-                .filter(product -> product.getName().equals(name))
-                .toList();
+    @Override
+    public Optional<Product> findById(long idProduct) {
+        var selectSql = "SELECT * FROM products_sobolev_ma.products where id = ?";
+
+        try (var connection = DriverManager.getConnection(JDBC);
+             var prepareStatement = connection.prepareStatement(selectSql)) {
+            prepareStatement.setLong(1, idProduct);
+
+            var resultSet = prepareStatement.executeQuery();
+
+            if (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                double price = resultSet.getDouble("price");
+                Product product = new Product(id, name,0, BigDecimal.valueOf(price));
+
+                return Optional.of(product);
+            }
+
+            return Optional.empty();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<Product> findAll(String nameProduct) {
+        var selectSql = "SELECT * FROM products_sobolev_ma.products where name like ?";
+        List<Product> products = new ArrayList<>();
+
+        try (var connection = DriverManager.getConnection(JDBC);
+             var prepareStatement = connection.prepareStatement(selectSql)) {
+            prepareStatement.setString(1, "%" + (nameProduct == null ? "" : nameProduct) + "%");
+
+            var resultSet = prepareStatement.executeQuery();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                double price = resultSet.getDouble("price");
+                Product product = new Product(id, name,0, BigDecimal.valueOf(price));
+
+                products.add(product);
+            }
+
+            return products;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public boolean update(Product product) {
-        for (Product p : products) {
-            if (p.getId() == product.getId()) {
-                p.setName(product.getName());
-                p.setPrice(product.getPrice());
+        var selectSql = """
+                UPDATE products_sobolev_ma.products
+                SET 
+                name = ?,
+                price = ?
+                where id = ?;
+                """;
 
-                return true;
-            }
+        try (var connection = DriverManager.getConnection(JDBC);
+             var prepareStatement = connection.prepareStatement(selectSql)) {
+            prepareStatement.setString(1, product.getName());
+            prepareStatement.setDouble(2, product.getPrice().doubleValue());
+            prepareStatement.setLong(3, product.getId());
+
+            var rows = prepareStatement.executeUpdate();
+
+            return rows > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
 
-        return false;
     }
 
     @Override
-    public boolean deleteById(long id) {
-        return products.removeIf(product -> product.getId() == id);
+    public boolean deleteById(long idProduct) {
+        var selectSql = "DELETE FROM products_sobolev_ma.products where id = ?";
+
+        try (var connection = DriverManager.getConnection(JDBC);
+             var prepareStatement = connection.prepareStatement(selectSql)) {
+            prepareStatement.setLong(1, idProduct);
+
+            var rows = prepareStatement.executeUpdate();
+
+            return rows > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    private long generateId() {
-        Random random = new Random();
-        int low = 1;
-        int high = 1_000_000;
-        return random.nextLong(high - low) + low;
-    }
 }

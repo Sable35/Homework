@@ -1,6 +1,6 @@
 
 ###
-POST http://localhost:8080/clients
+POST localhost:8080/clients
 Content-Type: application/json
 
 {
@@ -11,10 +11,10 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8080/clients/381172
+GET localhost:8080/clients/1
 
 ###
-DELETE localhost:8080/clients/234
+DELETE localhost:8080/clients/1
 
 ###
 POST http://localhost:8080/products
@@ -22,8 +22,7 @@ Content-Type: application/json
 
 {
   "name": "Морковь",
-  "price": 60,
-  "amount": 1
+  "price": 60
 }
 
 ###
@@ -31,49 +30,44 @@ PUT localhost:8080/products
 Content-Type: application/json
 
 {
-  "id": 5,
-  "name": "Абрикос",
-  "price": 70,
-  "amount": 2
-}
-
-###
-DELETE localhost:8080/products/5
-
-###
-GET localhost:8080/clients
-Content-Type: application/json
-
-{
   "id": 1,
-  "name": "Банан",
-  "price": 80
+  "name": "Абрикос",
+  "price": 70
 }
 
 ###
-GET http://localhost:8080/products/221601
+DELETE localhost:8080/products/1
+
+###
+GET http://localhost:8080/products/2
 
 ###
 GET http://localhost:8080/products?name=Морковь
 
 ###
-POST http://localhost:8080/carts/641999/823957
-
-###
-PUT http://localhost:8080/carts/641999
+POST http://localhost:8080/carts/2
 Content-Type: application/json
 
 {
-  "id": 823957,
+  "id": 2,
   "amount": 2
+}
+
+###
+PUT http://localhost:8080/carts/2
+Content-Type: application/json
+
+{
+  "id": 2,
+  "amount": 3
 }
 
 
 ###
-DELETE localhost:8080/carts/641999/13463
+DELETE http://localhost:8080/carts/2/2
 
 ###
-POST http://localhost:8080/payments/286582
+POST http://localhost:8080/payments/2
 
 
 

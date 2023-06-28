@@ -8,62 +8,75 @@ import ch.qos.logback.core.joran.conditional.IfAction;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 @Repository
 public class LocalCartRepository implements CartRepository{
 
-    private ProductRepository productRepository;
+    private static final String JDBC = "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=postgres";
+    @Override
+    public boolean addProductToCart(long idClient,Product product){
+        var insertSql = "INSERT INTO products_sobolev_ma.products_carts (id_product, id_client, amount) VALUES (?,?,?);";
 
-    public LocalCartRepository(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
+        try (var connection = DriverManager.getConnection(JDBC);
+             var prepareStatement = connection.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS)) {
+            prepareStatement.setLong(1, product.getId());
+            prepareStatement.setLong(2, idClient);
+            prepareStatement.setInt(3, product.getAmount());
 
-    private List<Cart> carts= new ArrayList<>(List.of(
-    ));
+            prepareStatement.executeUpdate();
 
-    @Override
-    public void addCart(Cart cart){
-        carts.add(cart);
-    }
-    @Override
-    public boolean addProductToCart(long idCart,long idProduct){
-        if (productRepository.findById(idProduct).isPresent()) {
-            Optional<Cart> cart = carts.stream().filter(cartt -> cartt.getId() == idCart).findAny();
-                    if (cart.isPresent()) {
-                        cart.get().getProductList().add(productRepository.findById(idProduct).get());
-                        return true;
-                    }
-    
-        } 
-        return false;
-    }
-    @Override
-    public boolean deleteById(long idCart, long idProduct) {
-        Optional<Cart> cart = carts.stream().filter(cartt -> cartt.getId() == idCart).findAny();
-        if (cart.isPresent()){
-            return cart.get().getProductList().removeIf(product -> product.getId() == idProduct);
-        } return false;
-    }
-    @Override
-    public boolean update(Product product, long idCart) {
-            if (productRepository.findById(product.getId()).isPresent()) {
-                Optional<Cart> cart = carts.stream().filter(cartt -> cartt.getId() == idCart).findAny();
-                if (cart.isPresent()) {
-                        cart.get().getProductList().get(cart.get().getProductList().indexOf(productRepository.findById(product.getId()).get())).setName(product.getName());
-                        cart.get().getProductList().get(cart.get().getProductList().indexOf(productRepository.findById(product.getId()).get())).setPrice(product.getPrice());
-                        return true;
-                    }
+            ResultSet rs = prepareStatement.getGeneratedKeys();
+            if (rs.next()) {
+                return true;
+            } else {
+                return false;
             }
-        return false;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
+    @Override
+    public boolean deleteById(long idClient, long idProduct) {
+        var selectSql = "DELETE FROM products_sobolev_ma.products_carts where id_client = ? and id_product = ?";
 
-    public Optional<Cart> findById(long id) {
-        return carts.stream()
-                .filter(cart -> cart.getId() == id)
-                .findAny();
+        try (var connection = DriverManager.getConnection(JDBC);
+             var prepareStatement = connection.prepareStatement(selectSql)) {
+            prepareStatement.setLong(1, idClient);
+            prepareStatement.setLong(2, idProduct);
+
+            var rows = prepareStatement.executeUpdate();
+
+            return rows > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
+    @Override
+    public boolean update(Product product, long idClient) {
+        var selectSql = """
+                UPDATE products_sobolev_ma.products_carts
+                SET 
+                amount = ?
+                where id_product = ? and id_client = ?;
+                """;
 
+        try (var connection = DriverManager.getConnection(JDBC);
+             var prepareStatement = connection.prepareStatement(selectSql)) {
+            prepareStatement.setInt(1, product.getAmount());
+            prepareStatement.setLong(2, product.getId());
+            prepareStatement.setLong(3, idClient);
 
+            var rows = prepareStatement.executeUpdate();
+
+            return rows > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

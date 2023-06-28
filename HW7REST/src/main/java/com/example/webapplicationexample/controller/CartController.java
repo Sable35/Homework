@@ -17,10 +17,10 @@ public class CartController {
         this.cartRepository = cartRepository;
     }
 
-    @DeleteMapping("/{idCart}/{idProduct}")
-    public ResponseEntity<?> deleteProduct(@PathVariable long idProduct, @PathVariable long idCart) {
-        log.info("Удаление клиента по idCart {} idProduct {}", idCart, idProduct);
-        boolean isDeleted = cartRepository.deleteById(idCart, idProduct);
+    @DeleteMapping("/{idClient}/{idProduct}")
+    public ResponseEntity<?> deleteProduct(@PathVariable long idProduct, @PathVariable long idClient) {
+        log.info("Удаление продукта по idClient {} idProduct {}", idClient, idProduct);
+        boolean isDeleted = cartRepository.deleteById(idClient, idProduct);
 
         if (isDeleted) {
             return ResponseEntity.noContent().build();
@@ -29,10 +29,10 @@ public class CartController {
         }
     }
 
-    @PutMapping("/{idCart}")
-    public ResponseEntity<?> updateProduct(@PathVariable long idCart,@RequestBody Product product) {
-        log.info("обновления продукта {} по idCart {}", idCart, product.getName());
-        boolean isUpdated = cartRepository.update(product, idCart);
+    @PutMapping("/{idClient}")
+    public ResponseEntity<?> updateProduct(@PathVariable long idClient,@RequestBody Product product) {
+        log.info("обновления продукта {} по idClient {}", idClient, product.getName());
+        boolean isUpdated = cartRepository.update(product, idClient);
 
         if (isUpdated) {
             return ResponseEntity.ok().build();
@@ -41,10 +41,10 @@ public class CartController {
         }
     }
 
-    @PostMapping("/{idCart}/{idProduct}")
-    public ResponseEntity<?> addProduct(@PathVariable long idCart, @PathVariable long idProduct) {
-        log.info("Добавление продукта по idProduct{}", idProduct);
-        boolean isAdded = cartRepository.addProductToCart(idCart,idProduct);
+    @PostMapping("/{idClient}")
+    public ResponseEntity<?> addProduct(@PathVariable long idClient, @RequestBody Product product) {
+        log.info("Добавление продукта ", product);
+        boolean isAdded = cartRepository.addProductToCart(idClient, product);
 
         if (isAdded) {
             return ResponseEntity.ok().build();
