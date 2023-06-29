@@ -8,6 +8,5 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public class Cart {
-    private List<Product> productList;
-    private String promoCode;
+    private List<Product> productList;;
 }

@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>HW8JDBC</artifactId>
+    <artifactId>HW9JDBCTemplate</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>web-application-example</name>
     <description>web-application-example</description>
@@ -29,6 +29,17 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>6.0.10</version>
         </dependency>
 
         <dependency>
