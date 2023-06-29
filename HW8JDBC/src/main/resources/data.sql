@@ -1,4 +1,5 @@
 create schema if not exists products_sobolev_ma;
+create schema if not exists products_sobolev_ma;
 
 create  table products_sobolev_ma.products
 (
