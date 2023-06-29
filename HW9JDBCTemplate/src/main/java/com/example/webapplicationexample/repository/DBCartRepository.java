@@ -85,6 +85,7 @@ public class DBCartRepository implements CartRepository{
         PreparedStatementCreator preparedStatementCreator = connection -> {
             var prepareStatement = connection.prepareStatement(deleteSql);
             prepareStatement.setLong(1, idClient);
+            prepareStatement.setLong(2, idProduct);
 
             return prepareStatement;
         };

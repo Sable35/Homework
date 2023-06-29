@@ -11,10 +11,10 @@ Content-Type: application/json
 }
 
 ###
-GET localhost:8080/clients/2
+GET localhost:8080/clients/3
 
 ###
-DELETE localhost:8080/clients/1
+DELETE localhost:8080/clients/3
 
 ###
 POST http://localhost:8080/products
@@ -22,7 +22,7 @@ Content-Type: application/json
 
 {
   "name": "Морковь",
-  "price": 60,
+  "price": 70,
   "amount" : 10
 }
 
@@ -31,14 +31,14 @@ PUT localhost:8080/products
 Content-Type: application/json
 
 {
-  "id": 1,
+  "id": 3,
   "name": "Абрикос",
   "price": 70,
   "amount" : 10
 }
 
 ###
-DELETE localhost:8080/products/1
+DELETE localhost:8080/products/3
 
 ###
 GET http://localhost:8080/products/2
@@ -51,7 +51,7 @@ POST http://localhost:8080/carts/2
 Content-Type: application/json
 
 {
-  "id": 1,
+  "id": 2,
   "amount": 2
 }
 
