@@ -11,11 +11,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 
 
 @Repository
-public class LocalProductRepository implements ProductRepository {
+public class DBProductRepository implements ProductRepository {
     private static final String JDBC = "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=postgres";
 
     @Override

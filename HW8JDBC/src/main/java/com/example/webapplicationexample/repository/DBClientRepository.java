@@ -2,21 +2,18 @@ package com.example.webapplicationexample.repository;
 
 import com.example.webapplicationexample.model.Cart;
 import com.example.webapplicationexample.model.Client;
-import com.example.webapplicationexample.model.CutClient;
 import com.example.webapplicationexample.model.Product;
 import org.springframework.stereotype.Repository;
 
-import java.math.BigDecimal;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
-import java.util.Random;
+
 @Repository
-public class LocalClientRepository implements ClientRepository{
+public class DBClientRepository implements ClientRepository{
 
     private static final String JDBC = "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=postgres";
 

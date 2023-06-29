@@ -1,17 +1,13 @@
 package com.example.webapplicationexample.services;
 
-import com.example.webapplicationexample.model.Product;
-import com.example.webapplicationexample.repository.CartRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+
 @Service
-public class LocalPaymentService implements PaymentService{
+public class DBPaymentService implements PaymentService{
 
     private static final String JDBC = "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=postgres";
 
@@ -19,7 +15,7 @@ public class LocalPaymentService implements PaymentService{
     public boolean cartSum(long idClient) {
         var selectSql = """
                             SELECT price, amount
-                            FROM products_sobolev_ma.products_carts pc
+                            FROM products_sobolev_ma.products_clients pc
                             join products_sobolev_ma.products p on p.id=pc.id_product
                             where pc.id_client = ?""";
 

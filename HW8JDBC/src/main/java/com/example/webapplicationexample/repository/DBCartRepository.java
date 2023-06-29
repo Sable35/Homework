@@ -1,27 +1,21 @@
 package com.example.webapplicationexample.repository;
 
-import com.example.webapplicationexample.model.Cart;
 import com.example.webapplicationexample.model.Product;
-
-import ch.qos.logback.core.joran.conditional.IfAction;
 
 import org.springframework.stereotype.Repository;
 
-import java.math.BigDecimal;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+
 @Repository
-public class LocalCartRepository implements CartRepository{
+public class DBCartRepository implements CartRepository{
 
     private static final String JDBC = "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=postgres";
     @Override
     public boolean addProductToCart(long idClient,Product product){
-        var insertSql = "INSERT INTO products_sobolev_ma.products_carts (id_product, id_client, amount) VALUES (?,?,?);";
+        var insertSql = "INSERT INTO products_sobolev_ma.products_clients (id_product, id_client, amount) VALUES (?,?,?);";
 
         try (var connection = DriverManager.getConnection(JDBC);
              var prepareStatement = connection.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS)) {
@@ -43,7 +37,7 @@ public class LocalCartRepository implements CartRepository{
     }
     @Override
     public boolean deleteById(long idClient, long idProduct) {
-        var selectSql = "DELETE FROM products_sobolev_ma.products_carts where id_client = ? and id_product = ?";
+        var selectSql = "DELETE FROM products_sobolev_ma.products_clients where id_client = ? and id_product = ?";
 
         try (var connection = DriverManager.getConnection(JDBC);
              var prepareStatement = connection.prepareStatement(selectSql)) {
@@ -60,7 +54,7 @@ public class LocalCartRepository implements CartRepository{
     @Override
     public boolean update(Product product, long idClient) {
         var selectSql = """
-                UPDATE products_sobolev_ma.products_carts
+                UPDATE products_sobolev_ma.products_clients
                 SET 
                 amount = ?
                 where id_product = ? and id_client = ?;

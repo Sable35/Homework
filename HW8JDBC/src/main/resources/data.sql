@@ -18,12 +18,12 @@ create table products_sobolev_ma.clients
     promocode varchar(255)
     );
 
-create table products_sobolev_ma.products_carts
-(   id_product integer not null
+create table products_sobolev_ma.products_clients
+(   amount integer not null,
+    id_product integer not null
     constraint products_id_fk
     references products_sobolev_ma.products,
     id_client    integer not null
     constraint clients_id_fk
-    references products_sobolev_ma.clients,
-    count      integer not null
+    references products_sobolev_ma.clients
 );
