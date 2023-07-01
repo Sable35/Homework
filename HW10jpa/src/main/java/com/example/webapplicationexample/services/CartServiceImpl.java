@@ -75,11 +75,6 @@ public class CartServiceImpl implements CartService {
         return true;
     }
     @Override
-    public boolean deleteAll(){
-        cartRepository.deleteAll();
-        return true;
-    }
-    @Override
     public boolean reduceProduct(Cart cart){
         Product product = cart.getProduct();
         product.setAmount(product.getAmount()-cart.getAmount());
@@ -99,7 +94,7 @@ public class CartServiceImpl implements CartService {
                         reduceProduct(cart);
                 }
             }
-        deleteAll();
+        cartRepository.deleteAllByClient(client.get());
         return Optional.of(sum);
     }
 
