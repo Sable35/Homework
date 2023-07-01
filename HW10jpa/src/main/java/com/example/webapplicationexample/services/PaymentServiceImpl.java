@@ -1,6 +1,7 @@
 package com.example.webapplicationexample.services;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
@@ -12,7 +13,7 @@ public class PaymentServiceImpl implements PaymentService{
     public PaymentServiceImpl(CartService cartService) {
         this.cartService = cartService;
     }
-
+    @Transactional
     public BigDecimal cartSum(long idClient){
         return cartService.sumOfCartClient(idClient).get();
     }
