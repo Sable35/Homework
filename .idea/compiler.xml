@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="HW4Aspects" />
+        <module name="gs-maven" />
+        <module name="HW2beans" />
+        <module name="HW3AppSchema" />
+        <module name="HW6web" />
+        <module name="HW2component" />
+        <module name="HW10jpa" />
+        <module name="HW7REST" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="HW8JDBC" target="17" />
+      <module name="HW9JDBCTemplate" target="17" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="HW10jpa" options="-parameters" />
+      <module name="HW6web" options="-parameters" />
+      <module name="HW7REST" options="-parameters" />
+      <module name="HW8JDBC" options="-parameters" />
+      <module name="HW9JDBCTemplate" options="-parameters" />
+    </option>
+  </component>
+</project>

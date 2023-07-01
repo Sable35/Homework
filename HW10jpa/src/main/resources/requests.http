@@ -1,0 +1,76 @@
+
+###
+POST localhost:8080/clients
+Content-Type: application/json
+
+{
+    "name": "HRT",
+    "login": "RTH",
+    "password": "paRTH",
+    "email": "olRTHg@GMAIL.com"
+}
+
+###
+GET localhost:8080/clients/1
+
+###
+DELETE localhost:8080/clients/4
+
+###
+POST http://localhost:8080/products
+Content-Type: application/json
+
+{
+  "name": "Морковь",
+  "price": 70,
+  "amount" : 10
+}
+
+###
+PUT localhost:8080/products
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "Абрикос",
+  "price": 70,
+  "amount" : 10
+}
+
+###
+DELETE localhost:8080/products/1
+
+###
+GET http://localhost:8080/products/1
+
+###
+GET http://localhost:8080/products?name="Морковь"
+
+###
+POST http://localhost:8080/carts/2
+Content-Type: application/json
+
+{
+  "id": 1,
+  "amount": 2
+}
+
+###
+PUT http://localhost:8080/carts/2
+Content-Type: application/json
+
+{
+  "id": 2,
+  "amount": 3
+}
+
+
+###
+DELETE http://localhost:8080/carts/1/1
+
+###
+POST http://localhost:8080/payments/1
+
+
+
+

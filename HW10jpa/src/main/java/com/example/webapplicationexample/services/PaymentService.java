@@ -1,6 +1,8 @@
 package com.example.webapplicationexample.services;
 
+import java.math.BigDecimal;
+
 public interface PaymentService {
-    boolean cartSum(long idCart);
+    BigDecimal cartSum(long idClient);
 
 }

@@ -1,15 +1,11 @@
 package com.example.webapplicationexample.services;
 
-import com.example.webapplicationexample.model.Product;
-import com.example.webapplicationexample.repository.CartRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+
 @Service
 public class LocalPaymentService implements PaymentService{
 
