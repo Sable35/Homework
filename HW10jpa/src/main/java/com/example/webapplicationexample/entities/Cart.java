@@ -22,7 +22,7 @@ public class Cart {
     @JoinColumn(nullable = false)
     private Product product;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(nullable = false)
     private Client client;
 }

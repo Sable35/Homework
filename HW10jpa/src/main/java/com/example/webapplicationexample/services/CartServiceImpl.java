@@ -83,7 +83,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Optional<BigDecimal> sumOfCartClient(long idClient) {
+    public BigDecimal sumOfCartClient(long idClient) {
         Optional<Client> client = clientService.findById(idClient);
         BigDecimal sum = BigDecimal.valueOf(0);
             for (Cart cart : cartRepository.findCartsByClient(client.get())) {
@@ -95,7 +95,7 @@ public class CartServiceImpl implements CartService {
                 }
             }
         cartRepository.deleteAllByClient(client.get());
-        return Optional.of(sum);
+        return sum;
     }
 
     public boolean isAmountProductEnough(Cart cart) {

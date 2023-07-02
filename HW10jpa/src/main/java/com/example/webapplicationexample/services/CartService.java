@@ -10,7 +10,7 @@ public interface CartService {
     Optional<Cart> findById(long idClient);
     boolean deleteCartByProductAndClient(long idProduct,long idClient);
 
-    Optional<BigDecimal> sumOfCartClient(long idClient);
+    BigDecimal sumOfCartClient(long idClient);
     boolean isAmountProductEnough(Cart cartList);
     long save(Cart cart);
     boolean update(Product product, long idClient);

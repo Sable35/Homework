@@ -15,6 +15,6 @@ public class PaymentServiceImpl implements PaymentService{
     }
     @Transactional
     public BigDecimal cartSum(long idClient){
-        return cartService.sumOfCartClient(idClient).get();
+        return cartService.sumOfCartClient(idClient);
     }
 }
