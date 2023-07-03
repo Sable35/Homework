@@ -1,0 +1,6 @@
+{
+  "timestamp": "2023-07-01T08:31:12.172+00:00",
+  "status": 500,
+  "error": "Internal Server Error",
+  "path": "/clients"
+}

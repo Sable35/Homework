@@ -1,0 +1,23 @@
+{
+  "name": "HRT",
+  "email": "olRTHg@GMAIL.com",
+  "cartList": [
+    {
+      "id": 2,
+      "amount": 2,
+      "product": {
+        "id": 1,
+        "name": "Абрикос",
+        "amount": 10,
+        "price": 70.00
+      },
+      "client": {
+        "id": 1,
+        "name": "HRT",
+        "login": "RTH",
+        "password": "paRTH",
+        "email": "olRTHg@GMAIL.com"
+      }
+    }
+  ]
+}
