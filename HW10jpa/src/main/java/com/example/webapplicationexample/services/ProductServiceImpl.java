@@ -1,5 +1,6 @@
 package com.example.webapplicationexample.services;
 
+import com.example.webapplicationexample.entities.CutProduct;
 import com.example.webapplicationexample.entities.Product;
 import com.example.webapplicationexample.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +27,11 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Optional<Product> findById(long idProduct) {
+    public CutProduct findById(long idProduct) {
         Optional<Product> product = productRepository.findById(idProduct);
         if (product.isPresent()){
-            return product;
+            CutProduct cutProduct = new CutProduct(product.get().getId(),product.get().getName(),product.get().getAmount(),product.get().getPrice());
+            return cutProduct;
         } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Не существует такого продукта");
     }
 

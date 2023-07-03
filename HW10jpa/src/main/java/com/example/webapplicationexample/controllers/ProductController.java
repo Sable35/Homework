@@ -1,5 +1,6 @@
 package com.example.webapplicationexample.controllers;
 
+import com.example.webapplicationexample.entities.CutProduct;
 import com.example.webapplicationexample.entities.Product;
 import com.example.webapplicationexample.services.ProductService;
 import lombok.extern.slf4j.Slf4j;
@@ -36,15 +37,11 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProducts(@PathVariable long id) {
+    public ResponseEntity<CutProduct> getProducts(@PathVariable long id) {
         log.info("Получение продукта по id {}", id);
-        Optional<Product> product = productService.findById(id);
+        CutProduct cutProduct = productService.findById(id);
+        return ResponseEntity.ok().body(cutProduct);
 
-        if (product.isPresent()) {
-            return ResponseEntity.ok().body(product.get());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
     }
 
     @PutMapping

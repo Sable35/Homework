@@ -25,6 +25,6 @@ public class Client {
     private String password;
     @Column(nullable = false)
     private String email;
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "client", cascade = CascadeType.REMOVE, orphanRemoval = true)
     List<Cart> carts = new ArrayList<>();
 }

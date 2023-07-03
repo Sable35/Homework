@@ -24,7 +24,7 @@ public class Product {
     private int amount;
     @Column(nullable = false)
     private BigDecimal price;
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE, orphanRemoval = true)
     List<Cart> carts = new ArrayList<>();
 
 }

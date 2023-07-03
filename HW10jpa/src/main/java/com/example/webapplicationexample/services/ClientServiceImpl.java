@@ -31,7 +31,7 @@ public class ClientServiceImpl implements ClientService{
     }
 
     public Optional<CutClient> getClientWithCart(long idClient){
-        Optional<Client> client = this.findById(idClient);
+        Optional<Client> client = findById(idClient);
         return Optional.of(new CutClient(client.get().getName(),client.get().getEmail(),cartRepository.findCartsByClient(client.get())));
     }
     @Override
