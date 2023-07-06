@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/HW10jpa/HW10jpa.iml" filepath="$PROJECT_DIR$/HW10jpa/HW10jpa.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HW2beans/HW2beans.iml" filepath="$PROJECT_DIR$/HW2beans/HW2beans.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HW2component/HW2component.iml" filepath="$PROJECT_DIR$/HW2component/HW2component.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HW3AppSchema/HW3AppSchema.iml" filepath="$PROJECT_DIR$/HW3AppSchema/HW3AppSchema.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HW4Aspects/HW4Aspects.iml" filepath="$PROJECT_DIR$/HW4Aspects/HW4Aspects.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HW6web/HW6web.iml" filepath="$PROJECT_DIR$/HW6web/HW6web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HW7REST/HW7REST.iml" filepath="$PROJECT_DIR$/HW7REST/HW7REST.iml" />
+      <module fileurl="file://$PROJECT_DIR$/newproj/demo/gs-maven.iml" filepath="$PROJECT_DIR$/newproj/demo/gs-maven.iml" />
+    </modules>
+  </component>
+</project>

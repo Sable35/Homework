@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="gs-maven" target="1.8" />
+      <module name="HW10jpa" target="17" />
+      <module name="HW2beans" target="17" />
+      <module name="HW2component" target="17" />
+      <module name="HW3AppSchema" target="17" />
+      <module name="HW4Aspects" target="17" />
+      <module name="HW6web" target="17" />
+      <module name="HW7REST" target="17" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
