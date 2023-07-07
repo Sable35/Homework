@@ -4,9 +4,133 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fc6d1141-c90b-4113-bf61-10aaf334ed3d" name="Changes" comment="HW11">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" />
+    <list default="true" id="fc6d1141-c90b-4113-bf61-10aaf334ed3d" name="Changes" comment="HW14">
+      <change afterPath="$PROJECT_DIR$/hw13axios/backend/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/backend/.mvn/wrapper/maven-wrapper.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/backend/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/backend/mvnw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/backend/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/backend/src/main/java/com/example/webapplicationexample/WebApplicationExampleApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/backend/src/main/java/com/example/webapplicationexample/controllers/AuthController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/backend/src/main/java/com/example/webapplicationexample/controllers/CartController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/backend/src/main/java/com/example/webapplicationexample/controllers/PaymentController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/backend/src/main/java/com/example/webapplicationexample/controllers/ProductController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/backend/src/main/java/com/example/webapplicationexample/entities/Cart.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/backend/src/main/java/com/example/webapplicationexample/entities/CutUser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/backend/src/main/java/com/example/webapplicationexample/entities/ERole.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/backend/src/main/java/com/example/webapplicationexample/entities/Product.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/backend/src/main/java/com/example/webapplicationexample/entities/Promocode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/backend/src/main/java/com/example/webapplicationexample/entities/Role.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/backend/src/main/java/com/example/webapplicationexample/entities/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/backend/src/main/java/com/example/webapplicationexample/entities/request/LoginRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/backend/src/main/java/com/example/webapplicationexample/entities/request/SignupRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/backend/src/main/java/com/example/webapplicationexample/entities/response/JwtResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/backend/src/main/java/com/example/webapplicationexample/entities/response/MessageResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/backend/src/main/java/com/example/webapplicationexample/repositories/CartRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/backend/src/main/java/com/example/webapplicationexample/repositories/ProductRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/backend/src/main/java/com/example/webapplicationexample/repositories/RoleRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/backend/src/main/java/com/example/webapplicationexample/repositories/UserRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/backend/src/main/java/com/example/webapplicationexample/security/WebSecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/backend/src/main/java/com/example/webapplicationexample/security/jwt/AuthEntryPointJwt.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/backend/src/main/java/com/example/webapplicationexample/security/jwt/AuthTokenFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/backend/src/main/java/com/example/webapplicationexample/security/jwt/JwtUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/backend/src/main/java/com/example/webapplicationexample/security/services/UserDetailsImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/backend/src/main/java/com/example/webapplicationexample/security/services/UserDetailsServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/backend/src/main/java/com/example/webapplicationexample/services/CartService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/backend/src/main/java/com/example/webapplicationexample/services/CartServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/backend/src/main/java/com/example/webapplicationexample/services/PaymentService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/backend/src/main/java/com/example/webapplicationexample/services/PaymentServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/backend/src/main/java/com/example/webapplicationexample/services/ProductService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/backend/src/main/java/com/example/webapplicationexample/services/ProductServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/backend/src/main/java/com/example/webapplicationexample/services/UserService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/backend/src/main/java/com/example/webapplicationexample/services/UserServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/backend/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/backend/src/main/resources/data.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/backend/src/main/resources/requests.http" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/backend/src/main/resources/schema.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/backend/src/test/java/com/example/webapplicationexample/WebApplicationExampleApplicationTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/frontend/src/components/CartProducts.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/frontend/src/components/Logup.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/frontend/src/components/User.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/frontend/src/services/AuthHeader.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/frontend/src/services/AuthService.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/frontend/src/services/PaymentService.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hw13axios/frontend/src/slices/AuthSlice.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hw13axios/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hw13axios/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/HW10jpa/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/HW10jpa/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/HW10jpa/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/HW10jpa/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/HW10jpa/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/HW10jpa/src/main/java/com/example/webapplicationexample/WebApplicationExampleApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/HW10jpa/src/main/java/com/example/webapplicationexample/controllers/CartController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/HW10jpa/src/main/java/com/example/webapplicationexample/controllers/ClientController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/HW10jpa/src/main/java/com/example/webapplicationexample/controllers/PaymentController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/HW10jpa/src/main/java/com/example/webapplicationexample/controllers/ProductController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/HW10jpa/src/main/java/com/example/webapplicationexample/entities/Cart.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/HW10jpa/src/main/java/com/example/webapplicationexample/entities/Client.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/HW10jpa/src/main/java/com/example/webapplicationexample/entities/CutClient.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/HW10jpa/src/main/java/com/example/webapplicationexample/entities/Product.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/HW10jpa/src/main/java/com/example/webapplicationexample/entities/Promocode.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/HW10jpa/src/main/java/com/example/webapplicationexample/repositories/CartRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/HW10jpa/src/main/java/com/example/webapplicationexample/repositories/ClientRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/HW10jpa/src/main/java/com/example/webapplicationexample/repositories/ProductRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/HW10jpa/src/main/java/com/example/webapplicationexample/services/CartService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/HW10jpa/src/main/java/com/example/webapplicationexample/services/CartServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/HW10jpa/src/main/java/com/example/webapplicationexample/services/ClientService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/HW10jpa/src/main/java/com/example/webapplicationexample/services/ClientServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/HW10jpa/src/main/java/com/example/webapplicationexample/services/PaymentService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/HW10jpa/src/main/java/com/example/webapplicationexample/services/PaymentServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/HW10jpa/src/main/java/com/example/webapplicationexample/services/ProductService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/HW10jpa/src/main/java/com/example/webapplicationexample/services/ProductServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/HW10jpa/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/HW10jpa/src/main/resources/data.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/HW10jpa/src/main/resources/requests.http" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/HW10jpa/src/main/resources/schema.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/HW10jpa/src/test/java/com/example/webapplicationexample/WebApplicationExampleApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/hw12antredux/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/hw13axios/frontend/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/hw12antredux/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/hw13axios/frontend/.idea/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/hw12antredux/.idea/hw12antredux.iml" beforeDir="false" afterPath="$PROJECT_DIR$/hw13axios/frontend/.idea/hw12antredux.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/hw12antredux/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hw13axios/frontend/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/hw12antredux/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hw13axios/frontend/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/hw12antredux/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hw13axios/frontend/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/hw12antredux/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hw13axios/frontend/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/hw12antredux/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/hw13axios/frontend/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/hw12antredux/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/hw13axios/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/hw12antredux/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/hw13axios/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/hw12antredux/public/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/hw13axios/frontend/public/favicon.ico" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/hw12antredux/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/hw13axios/frontend/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/hw12antredux/public/logo192.png" beforeDir="false" afterPath="$PROJECT_DIR$/hw13axios/frontend/public/logo192.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/hw12antredux/public/logo512.png" beforeDir="false" afterPath="$PROJECT_DIR$/hw13axios/frontend/public/logo512.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/hw12antredux/public/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/hw13axios/frontend/public/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/hw12antredux/public/robots.txt" beforeDir="false" afterPath="$PROJECT_DIR$/hw13axios/frontend/public/robots.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/hw12antredux/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/hw13axios/frontend/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/hw12antredux/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/hw13axios/frontend/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/hw12antredux/src/App.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/hw13axios/frontend/src/App.test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/hw12antredux/src/components/Authorize.js" beforeDir="false" afterPath="$PROJECT_DIR$/hw13axios/frontend/src/components/Login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/hw12antredux/src/components/CartProducts.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/hw12antredux/src/components/EditProducts.js" beforeDir="false" afterPath="$PROJECT_DIR$/hw13axios/frontend/src/components/EditProducts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/hw12antredux/src/components/ProductCards.js" beforeDir="false" afterPath="$PROJECT_DIR$/hw13axios/frontend/src/components/ProductCards.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/hw12antredux/src/components/User.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/hw12antredux/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/hw13axios/frontend/src/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/hw12antredux/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/hw13axios/frontend/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/hw12antredux/src/logo.svg" beforeDir="false" afterPath="$PROJECT_DIR$/hw13axios/frontend/src/logo.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/hw12antredux/src/pages/AdminPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/hw13axios/frontend/src/pages/AdminPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/hw12antredux/src/pages/CartPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/hw13axios/frontend/src/pages/CartPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/hw12antredux/src/pages/NotFoundPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/hw13axios/frontend/src/pages/NotFoundPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/hw12antredux/src/pages/ProductsPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/hw13axios/frontend/src/pages/ProductsPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/hw12antredux/src/pages/ProfilePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/hw13axios/frontend/src/pages/ProfilePage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/hw12antredux/src/reportWebVitals.js" beforeDir="false" afterPath="$PROJECT_DIR$/hw13axios/frontend/src/reportWebVitals.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/hw12antredux/src/services/CartService.js" beforeDir="false" afterPath="$PROJECT_DIR$/hw13axios/frontend/src/services/CartService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/hw12antredux/src/services/UserService.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/hw12antredux/src/services/productService.js" beforeDir="false" afterPath="$PROJECT_DIR$/hw13axios/frontend/src/services/productService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/hw12antredux/src/setupTests.js" beforeDir="false" afterPath="$PROJECT_DIR$/hw13axios/frontend/src/setupTests.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/hw12antredux/src/slices/CartProductsSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/hw13axios/frontend/src/slices/CartProductsSlice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/hw12antredux/src/slices/UserSlice.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/hw12antredux/src/slices/productsSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/hw13axios/frontend/src/slices/productsSlice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw13axios/hw12antredux/src/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/hw13axios/frontend/src/store.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +152,19 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="ROOT_SYNC" value="SYNC" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="e349f5de-929a-40b7-886c-016504a63f85" />
+        <option name="url" value="https://github.com/Sable35/Homework" />
+      </UrlAndAccount>
+    </option>
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -43,38 +180,39 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Sobol.DESKTOP-SBK73B5/IdeaProjects/HWSAble&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;87a9b2130212a3c6750417f234f1510d&quot;,
-    &quot;sql.rename.search.for.storage.occurrences&quot;: &quot;true&quot;,
-    &quot;two.files.diff.last.used.folder&quot;: &quot;C:/Users/Sobol.DESKTOP-SBK73B5/IdeaProjects/HWSAble/products&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/Sobol.DESKTOP-SBK73B5/IdeaProjects/Homework",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "project.scopes",
+    "spring.configuration.checksum": "65c4d38fee9d4212cb65e26e494aaf5f",
+    "sql.rename.search.for.storage.occurrences": "true",
+    "two.files.diff.last.used.folder": "C:/Users/Sobol.DESKTOP-SBK73B5/IdeaProjects/HWSAble/products",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;postgresql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
     ],
-    &quot;RunConfigurationTargetLRU&quot;: [
-      &quot;f37e2f15-23fc-4c6c-8873-342593076d70&quot;
+    "RunConfigurationTargetLRU": [
+      "f37e2f15-23fc-4c6c-8873-342593076d70"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Sobol.DESKTOP-SBK73B5\IdeaProjects\HWSAble" />
@@ -158,6 +296,9 @@
       <workItem from="1688428401604" duration="167000" />
       <workItem from="1688428594268" duration="119000" />
       <workItem from="1688428743445" duration="5000" />
+      <workItem from="1688615946926" duration="279000" />
+      <workItem from="1688616278985" duration="397000" />
+      <workItem from="1688707792948" duration="152000" />
     </task>
     <task id="LOCAL-00001" summary="HW8 fixed">
       <created>1688018616272</created>
@@ -194,7 +335,21 @@
       <option name="project" value="LOCAL" />
       <updated>1688427911593</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="HW13">
+      <created>1688616103209</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1688616103209</updated>
+    </task>
+    <task id="LOCAL-00007" summary="HW13">
+      <created>1688616107684</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1688616107684</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -227,7 +382,9 @@
     <MESSAGE value="HW8 fixed" />
     <MESSAGE value="HW10" />
     <MESSAGE value="HW11" />
-    <option name="LAST_COMMIT_MESSAGE" value="HW11" />
+    <MESSAGE value="HW13" />
+    <MESSAGE value="HW14" />
+    <option name="LAST_COMMIT_MESSAGE" value="HW14" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
