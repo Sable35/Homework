@@ -41,11 +41,11 @@ function App() {
                         Корзина
                     </Button>
                 </Link>
-                <Link to="/Admin">
+                { currentUser ? (currentUser.roles.includes("ROLE_ADMIN") ? (<Link to="/Admin">
                     <Button type="link" style={{ backgroundColor: 'white', color: 'green' }}>
                         Редактирование товаров
                     </Button>
-                </Link>
+                </Link>) : null) : null}
                 {currentUser ? (
                     <Link to="/User">
                         <Button type="link" style={{ backgroundColor: 'white', color: 'green' }}>

@@ -1,6 +1,5 @@
 import axios from "axios";
 import {set} from "../slices/CartProductsSlice";
-import {useSelector} from "react-redux";
 import AuthHeader from "./AuthHeader";
 
 const API_URL = "http://localhost:8080/payments";
